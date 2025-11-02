@@ -1,0 +1,14 @@
+<p-button
+  [icon]="'pi pi-shopping-cart'"
+  (click)="toggleCart(); $event.stopPropagation()"
+  [styleClass]="isInCart ? 'p-button-rounded p-button-success cart-active filled-cart' : 'p-button-rounded p-button-text p-button-secondary cart-button'"
+  [pTooltip]="isInCart ? 'Remove from Cart' : 'Add to Cart'"
+  tooltipPosition="top"
+></p-button>
+
+<div class="cart-notification" *ngIf="showNotification">
+  <div class="notification-content" [ngClass]="{'text-green-600': !isInCart, 'text-red-500': isInCart}">
+    <i class="pi" [ngClass]="{'pi-check-circle': !isInCart, 'pi-times-circle': isInCart}"></i>
+    <span class="ml-2">{{ isInCart ? 'Removed from cart!' : 'Added to cart!' }}</span>
+  </div>
+</div>

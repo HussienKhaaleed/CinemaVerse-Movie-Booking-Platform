@@ -1,0 +1,39 @@
+.add-review {
+  margin-top: 20px;
+}
+
+/* Animation for review form */
+:host > div {
+  transition: all 0.3s ease;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Input animation */
+:host textarea:focus {
+  transform: scale(1.01);
+}
+
+:host textarea {
+  transition: all 0.2s ease;
+}
+
+/* Button animation */
+:host p-button ::ng-deep .p-button {
+  transition: all 0.2s ease;
+}
+
+:host p-button ::ng-deep .p-button:not(.p-disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

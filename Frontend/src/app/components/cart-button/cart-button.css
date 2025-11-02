@@ -1,0 +1,126 @@
+:host ::ng-deep .cart-button:hover {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+  color: #22c55e !important;
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .cart-active {
+  animation: cartPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: #22c55e !important;
+  color: white !important;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+  transform-origin: center;
+}
+
+/* Make the shopping cart icon appear filled when active */
+:host ::ng-deep .filled-cart .p-button-icon {
+  position: relative;
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.7));
+}
+
+:host ::ng-deep .filled-cart .p-button-icon:before {
+  content: "\e94c";  /* pi-shopping-cart */
+  font-weight: 900;  /* Make it bolder */
+}
+
+/* Additional visual cue for filled cart */
+:host ::ng-deep .filled-cart .p-button-icon:after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  top: -2px;
+  right: -2px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes cartPop {
+  0% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.25) rotate(5deg);
+  }
+  30% {
+    transform: scale(1) rotate(0deg);
+  }
+  45% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  60% {
+    transform: scale(1) rotate(0deg);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Cart notification animation */
+.cart-notification {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px solid #22c55e;
+  border-radius: 12px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.2);
+  z-index: 100;
+  animation: cartSlideUp 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+             cartFadeOut 0.4s ease 1.8s forwards;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: #22c55e;
+}
+
+.notification-content i {
+  font-size: 16px;
+  animation: cartPulse 1s infinite;
+}
+
+@keyframes cartSlideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 15px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes cartFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -15px);
+  }
+}
+
+@keyframes cartPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

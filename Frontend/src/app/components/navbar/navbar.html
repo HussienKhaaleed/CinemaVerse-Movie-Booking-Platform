@@ -1,0 +1,602 @@
+<!-- navbar.component.html -->
+
+<!-- Toast Notifications -->
+<p-toast position="top-right"></p-toast>
+
+<!-- Confirmation Dialog -->
+<p-confirmDialog></p-confirmDialog>
+
+<nav
+  class="sticky top-0 bg-white dark:bg-gray-900 shadow-md px-6 py-4 flex justify-between items-center z-50"
+>
+  <!-- Left: Logo + Links -->
+  <div class="flex items-center space-x-6">
+    <span class="font-bold text-xl cursor-pointer flex items-center">
+  <i class="pi pi-play-circle text-blue-600 dark:text-blue-400 mr-2 text-2xl"></i>
+  <span class="text-gradient">CinemaVerse</span>
+</span>
+    <div class="hidden md:flex space-x-6">
+      <a href="#movies" class="hover:text-blue-500">Movies</a>
+      <a href="#about" class="hover:text-blue-500">About Us</a>
+      <a href="#contact" class="hover:text-blue-500">Contact</a>
+    </div>
+  </div>
+
+  <!-- Right: Icons & Auth -->
+  <div class="flex items-center space-x-4">
+    <!-- Favorite Button -->
+    <button
+      class="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+      (click)="openFavorites()"
+      pTooltip="Favorites"
+      tooltipPosition="bottom"
+    >
+      <i class="pi pi-heart text-xl"></i>
+      <span
+        *ngIf="favoriteCount() > 0"
+        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center"
+      >
+        {{ favoriteCount() }}
+      </span>
+    </button>
+
+    <!-- Cart Button -->
+    <button
+      class="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+      (click)="openCart()"
+      pTooltip="Shopping Cart"
+      tooltipPosition="bottom"
+    >
+      <i class="pi pi-shopping-cart text-xl"></i>
+      <span
+        *ngIf="cartCount() > 0"
+        class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center"
+      >
+        {{ cartCount() }}
+      </span>
+    </button>
+
+    <!-- Bookings Button (Only visible when authenticated) -->
+    <button
+      *ngIf="isAuthenticated()"
+      class="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+      (click)="openBookings()"
+      pTooltip="My Bookings"
+      tooltipPosition="bottom"
+    >
+      <i class="pi pi-ticket text-xl"></i>
+      <span
+        *ngIf="bookingCount() > 0"
+        class="absolute -top-1 -right-1 bg-green-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center"
+      >
+        {{ bookingCount() }}
+      </span>
+    </button>
+
+    <!-- Auth Buttons (Desktop) -->
+    <ng-container *ngIf="!isAuthenticated()">
+      <button
+        pButton
+        label="Login"
+        class="p-button-text hidden md:inline"
+        (click)="showLoginDialog.set(true)"
+      ></button>
+      <button
+        pButton
+        label="Register"
+        class="p-button-outlined hidden md:inline"
+        (click)="showRegisterDialog.set(true)"
+      ></button>
+    </ng-container>
+
+    <!-- User Info (Desktop) -->
+    <ng-container *ngIf="isAuthenticated()">
+      <div class="hidden md:flex items-center space-x-3">
+        <div class="flex items-center space-x-2">
+          <div
+            class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold"
+          >
+            {{ authService.getUserInitials() }}
+          </div>
+          <span class="font-medium">{{ user()?.name }}</span>
+        </div>
+        <button
+          pButton
+          label="Logout"
+          icon="pi pi-sign-out"
+          class="p-button-text"
+          (click)="logout()"
+        ></button>
+      </div>
+    </ng-container>
+
+    <!-- Mobile menu toggle -->
+    <button
+      class="md:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
+      (click)="toggleMobileMenu()"
+    >
+      <i [class]="mobileMenuOpen() ? 'pi pi-times' : 'pi pi-bars'" class="text-xl"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div
+  *ngIf="mobileMenuOpen()"
+  class="md:hidden bg-white dark:bg-gray-900 shadow-md px-6 py-4 space-y-3 z-40"
+>
+  <a href="#movies" class="block hover:text-blue-500 py-2" (click)="closeMobileMenu()">Movies</a>
+  <a href="#about" class="block hover:text-blue-500 py-2" (click)="closeMobileMenu()">About Us</a>
+  <a href="#contact" class="block hover:text-blue-500 py-2" (click)="closeMobileMenu()">Contact</a>
+
+  <!-- <ng-container *ngIf="!isAuthenticated()">
+    <button
+      pButton
+      label="Login"
+      class="p-button-text w-full"
+      (click)="showLoginDialog.set(true); closeMobileMenu()"
+    ></button>
+    <button
+      pButton
+      label="Register"
+      class="p-button-outlined w-full"
+      (click)="showRegisterDialog.set(true); closeMobileMenu()"
+    ></button>
+  </ng-container> -->
+
+  <ng-container *ngIf="isAuthenticated()">
+    <div class="flex items-center justify-between py-2 border-t dark:border-gray-700">
+      <div class="flex items-center space-x-2">
+        <div
+          class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-semibold"
+        >
+          {{ authService.getUserInitials() }}
+        </div>
+        <span class="font-medium">{{ user()?.name }}</span>
+      </div>
+      <button
+        pButton
+        icon="pi pi-sign-out"
+        class="p-button-text p-button-rounded"
+        (click)="logout()"
+      ></button>
+    </div>
+  </ng-container>
+</div>
+
+<!-- Favorites Dialog -->
+<p-dialog
+  header="Your Favorites"
+  [(visible)]="showFavoritesDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '550px', maxHeight: '85vh' }"
+  [contentStyle]="{ padding: '1.5rem' }"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+>
+  <div *ngIf="favoriteItems().length === 0" class="text-center py-12">
+    <i class="pi pi-heart text-7xl text-gray-300 mb-4 block"></i>
+    <p class="text-gray-500 text-lg font-medium mb-2">No favorite items yet.</p>
+    <p class="text-gray-400 text-sm">Start adding items you love!</p>
+  </div>
+
+  <div *ngIf="favoriteItems().length > 0" class="space-y-3 max-h-96 overflow-y-auto">
+    <div
+      *ngFor="let item of favoriteItems()"
+      class="flex justify-between items-center p-4 border dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+    >
+      <div class="flex items-center space-x-4 flex-1">
+        <img
+          [src]="item.image || 'assets/placeholder.png'"
+          [alt]="item.name"
+          class="w-20 h-20 object-cover rounded-lg"
+        />
+        <div class="flex-1">
+          <div class="font-semibold text-base mb-1">{{ item.name }}</div>
+          <div class="text-base text-blue-600 dark:text-blue-400 font-semibold">
+            ${{ formatPrice(item.price) }}
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button
+          pButton
+          icon="pi pi-shopping-cart"
+          class="p-button-rounded p-button-text p-button-success"
+          pTooltip="Add to Cart"
+          (click)="addFavoriteToCart(item)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-text p-button-danger"
+          pTooltip="Remove"
+          (click)="removeFromFavorites(item.productId)"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div
+      *ngIf="favoriteItems().length > 0"
+      class="flex justify-between items-center pt-3 border-t dark:border-gray-700"
+    >
+      <span class="text-sm font-medium text-gray-600 dark:text-gray-400"
+        >{{ favoriteCount() }} item(s)</span
+      >
+      <button
+        pButton
+        label="Clear All"
+        icon="pi pi-trash"
+        class="p-button-text p-button-danger p-button-sm"
+        (click)="clearFavorites()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Cart Dialog -->
+<p-dialog
+  header="Your Cart"
+  [(visible)]="showCartDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '600px', maxHeight: '85vh' }"
+  [contentStyle]="{ padding: '1.5rem' }"
+  [draggable]="false"
+  [resizable]="false"
+  [dismissableMask]="true"
+>
+  <div *ngIf="cartItems().length === 0" class="text-center py-12">
+    <i class="pi pi-shopping-cart text-7xl text-gray-300 mb-4 block"></i>
+    <p class="text-gray-500 text-lg font-medium mb-2">Your cart is empty.</p>
+    <p class="text-gray-400 text-sm">Add items to get started!</p>
+  </div>
+
+  <div *ngIf="cartItems().length > 0" class="space-y-3 max-h-96 overflow-y-auto">
+    <div
+      *ngFor="let item of cartItems()"
+      class="flex justify-between items-center p-4 border dark:border-gray-700 rounded-lg"
+    >
+      <div class="flex items-center space-x-4 flex-1">
+        <img
+          [src]="item.image || 'assets/placeholder.png'"
+          [alt]="item.name"
+          class="w-20 h-20 object-cover rounded-lg"
+        />
+        <div class="flex-1">
+          <div class="font-semibold text-base mb-1">{{ item.name }}</div>
+          <div class="text-base text-blue-600 dark:text-blue-400 font-semibold mb-1">
+            ${{ formatPrice(item.price) }}
+          </div>
+          <div class="text-xs text-gray-500" *ngIf="item.maxStock">
+            <i class="pi pi-box mr-1"></i>{{ item.maxStock }} in stock
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-2 border dark:border-gray-700 rounded-lg p-2">
+          <button
+            pButton
+            icon="pi pi-minus"
+            class="p-button-rounded p-button-text p-button-sm"
+            [disabled]="item.quantity <= 1"
+            (click)="decrementCartItem(item.productId)"
+          ></button>
+          <span class="font-bold text-lg min-w-[40px] text-center">{{ item.quantity }}</span>
+          <button
+            pButton
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-text p-button-sm"
+            [disabled]="item.maxStock && item.quantity >= item.maxStock"
+            (click)="incrementCartItem(item.productId)"
+          ></button>
+        </div>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-text p-button-danger p-button-sm"
+          pTooltip="Remove"
+          (click)="removeFromCart(item.productId)"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div *ngIf="cartItems().length > 0" class="space-y-4">
+      <div class="flex justify-between items-center py-3 border-t dark:border-gray-700">
+        <div class="text-sm text-gray-600 dark:text-gray-400">
+          <div class="font-medium">
+            Items: <span class="text-gray-900 dark:text-white">{{ cartCount() }}</span>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm text-gray-500 mb-1">Total</div>
+          <div class="text-3xl font-bold text-blue-600 dark:text-blue-400">
+            ${{ formatPrice(cartTotal()) }}
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button
+          pButton
+          label="Clear Cart"
+          icon="pi pi-trash"
+          class="p-button-outlined p-button-danger flex-1"
+          (click)="clearCart()"
+        ></button>
+        <button
+          pButton
+          label="Checkout"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          class="flex-1 p-button-success"
+          (click)="goToCheckout()"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Login Dialog -->
+<p-dialog
+  header="Login to Your Account"
+  [(visible)]="showLoginDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '450px' }"
+  [contentStyle]="{ padding: '2rem' }"
+  (onShow)="renderGoogleLogin('login')"
+  (onHide)="clearForm()"
+>
+  <div class="flex flex-col gap-5 p-6">
+    <div
+      *ngIf="loginError()"
+      class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm flex items-start gap-2"
+    >
+      <i class="pi pi-exclamation-triangle text-base mt-0.5"></i>
+      <span>{{ loginError() }}</span>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="login-email" class="font-semibold text-sm">Email</label>
+      <input
+        id="login-email"
+        pInputText
+        placeholder="Enter your email"
+        [(ngModel)]="email"
+        type="email"
+        [disabled]="isLoggingIn()"
+        class="w-full p-3"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="login-password" class="font-semibold text-sm">Password</label>
+      <input
+        id="login-password"
+        pInputText
+        placeholder="Enter your password"
+        type="password"
+        [(ngModel)]="password"
+        [disabled]="isLoggingIn()"
+        (keyup.enter)="login()"
+        class="w-full p-3"
+      />
+    </div>
+
+    <button
+      pButton
+      label="Login"
+      icon="pi pi-sign-in"
+      [loading]="isLoggingIn()"
+      [disabled]="isLoggingIn()"
+      (click)="login()"
+      class="w-full p-3"
+    ></button>
+
+    <div class="flex items-center gap-3">
+      <div class="flex-1 border-t dark:border-gray-700"></div>
+      <span class="text-sm text-gray-500">OR</span>
+      <div class="flex-1 border-t dark:border-gray-700"></div>
+    </div>
+
+    <div id="google-login-button"></div>
+
+    <div class="text-center text-sm pt-2 border-t dark:border-gray-700">
+      <span class="text-gray-500">Don't have an account? </span>
+      <a
+        href="#"
+        class="text-blue-500 hover:underline"
+        (click)="showLoginDialog.set(false); showRegisterDialog.set(true); $event.preventDefault()"
+        >Register here</a
+      >
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Register Dialog -->
+<p-dialog
+  header="Create New Account"
+  [(visible)]="showRegisterDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '450px' }"
+  [contentStyle]="{ padding: '2rem' }"
+  (onShow)="renderGoogleLogin('register')"
+  (onHide)="clearForm()"
+>
+  <div class="flex flex-col gap-5 p-6">
+    <div
+      *ngIf="registerError()"
+      class="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm flex items-start gap-2"
+    >
+      <i class="pi pi-exclamation-triangle text-base mt-0.5"></i>
+      <span>{{ registerError() }}</span>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="register-username" class="font-semibold text-sm">Username</label>
+      <input
+        id="register-username"
+        pInputText
+        placeholder="Choose a username"
+        [(ngModel)]="username"
+        [disabled]="isRegistering()"
+        class="w-full p-3"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="register-email" class="font-semibold text-sm">Email</label>
+      <input
+        id="register-email"
+        pInputText
+        placeholder="Enter your email"
+        [(ngModel)]="email"
+        type="email"
+        [disabled]="isRegistering()"
+        class="w-full p-3"
+      />
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="register-password" class="font-semibold text-sm">Password</label>
+      <input
+        id="register-password"
+        pInputText
+        placeholder="Create a password (min 6 characters)"
+        type="password"
+        [(ngModel)]="password"
+        [disabled]="isRegistering()"
+        (keyup.enter)="register()"
+        class="w-full p-3"
+      />
+      <small class="text-gray-500">Password must be at least 6 characters</small>
+    </div>
+
+    <button
+      pButton
+      label="Register"
+      icon="pi pi-user-plus"
+      [loading]="isRegistering()"
+      [disabled]="isRegistering()"
+      (click)="register()"
+      class="w-full p-3"
+    ></button>
+
+    <div class="flex items-center gap-3">
+      <div class="flex-1 border-t dark:border-gray-700"></div>
+      <span class="text-sm text-gray-500">OR</span>
+      <div class="flex-1 border-t dark:border-gray-700"></div>
+    </div>
+
+    <div id="google-register-button"></div>
+
+    <div class="text-center text-sm pt-2 border-t dark:border-gray-700">
+      <span class="text-gray-500">Already have an account? </span>
+      <a
+        href="#"
+        class="text-blue-500 hover:underline"
+        (click)="showRegisterDialog.set(false); showLoginDialog.set(true); $event.preventDefault()"
+        >Login here</a
+      >
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Bookings Dialog -->
+<p-dialog
+  header="My Bookings"
+  [(visible)]="showBookingsDialog"
+  [modal]="true"
+  [style]="{ width: '90vw', maxWidth: '800px' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="bookings-container">
+    <!-- Loading State -->
+    <div *ngIf="isLoadingBookings()" class="text-center py-8">
+      <i class="pi pi-spin pi-spinner text-4xl text-blue-500"></i>
+      <p class="mt-4 text-gray-600">Loading your bookings...</p>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      *ngIf="!isLoadingBookings() && bookings().length === 0"
+      class="text-center py-12"
+    >
+      <i class="pi pi-ticket text-6xl text-gray-300 mb-4"></i>
+      <p class="text-gray-600 mb-2">No bookings yet</p>
+      <p class="text-sm text-gray-400">Book movie tickets to see them here!</p>
+    </div>
+
+    <!-- Bookings List -->
+    <div *ngIf="!isLoadingBookings() && bookings().length > 0" class="space-y-4">
+      <div
+        *ngFor="let booking of bookings()"
+        class="flex gap-4 p-4 border dark:border-gray-700 rounded-lg hover:shadow-md transition-shadow"
+      >
+        <!-- Movie Poster -->
+        <img
+          [src]="booking.movie.posterImage"
+          [alt]="booking.movie.title"
+          class="w-24 h-36 object-cover rounded"
+        />
+
+        <!-- Booking Details -->
+        <div class="flex-1">
+          <h3 class="font-bold text-lg mb-2">{{ booking.movie.title }}</h3>
+
+          <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+            <div class="flex items-center gap-2">
+              <i class="pi pi-calendar"></i>
+              <span>Show Time: {{ booking.showTime | date: 'medium' }}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <i class="pi pi-ticket"></i>
+              <span>Tickets: {{ booking.ticketsCount }}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <i class="pi pi-dollar"></i>
+              <span>Amount Paid: ${{ booking.amountPaid.toFixed(2) }}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <i class="pi pi-clock"></i>
+              <span>Booked: {{ booking.createdAt | date: 'short' }}</span>
+            </div>
+          </div>
+
+          <!-- Status Badge -->
+          <div class="mt-3">
+            <span
+              [class]="
+                'px-3 py-1 rounded-full text-xs font-semibold ' +
+                (booking.status === 'upcoming'
+                  ? 'bg-blue-100 text-blue-800'
+                  : booking.status === 'in-progress'
+                  ? 'bg-green-100 text-green-800'
+                  : 'bg-gray-100 text-gray-800')
+              "
+            >
+              {{ booking.status === 'upcoming' ? 'Upcoming' :
+                 booking.status === 'in-progress' ? 'In Progress' : 'Completed' }}
+            </span>
+            <span
+              class="ml-2 px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+            >
+              {{ booking.paymentStatus === 'paid' ? 'Paid' : booking.paymentStatus }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

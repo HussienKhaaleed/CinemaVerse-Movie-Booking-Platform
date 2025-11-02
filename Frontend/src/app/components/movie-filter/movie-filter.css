@@ -1,0 +1,21 @@
+.filter-section {
+  margin-bottom: 20px;
+}
+
+/* Animate genre chips */
+:host .flex-wrap > div {
+  transition: all 0.3s ease;
+}
+
+:host .flex-wrap > div:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Clear filters button animation */
+button.text-blue-600 {
+  transition: all 0.2s ease;
+}
+
+button.text-blue-600:hover {
+  transform: scale(1.05);
+}

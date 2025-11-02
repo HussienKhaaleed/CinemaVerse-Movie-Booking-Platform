@@ -1,0 +1,29 @@
+<div class="shadow-md border border-gray-700 p-5 rounded-lg transition-all hover:shadow-lg" style="background-color: #1a1a24; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+  <div class="flex justify-between mb-4">
+    <div>
+      <h4 class="font-semibold text-white">Write a Review</h4>
+      <div class="mt-1">
+        <p-rating [(ngModel)]="userRating" [stars]="5" class="review-rating"></p-rating>
+      </div>
+    </div>
+    <span class="text-sm text-gray-400 font-medium">{{ getCurrentDate() }}</span>
+  </div>
+
+  <textarea
+    pInputTextarea
+    [(ngModel)]="reviewText"
+    placeholder="Share your thoughts about this movie..."
+    [rows]="3"
+    class="w-full mb-4 p-4 border border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-400 bg-gray-900 text-white"
+  ></textarea>
+
+  <div class="flex justify-end">
+    <p-button
+      label="Submit Review"
+      icon="pi pi-send"
+      (click)="submitReview()"
+      [disabled]="!reviewText.trim() || userRating === 0"
+      styleClass="p-button-rounded p-button-primary submit-review-btn"
+    ></p-button>
+  </div>
+</div>

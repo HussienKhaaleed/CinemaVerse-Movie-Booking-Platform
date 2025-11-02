@@ -1,0 +1,6 @@
+.checkout-container { max-width: 720px; margin: 24px auto; }
+.checkout-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; }
+.checkout-item .thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; }
+.checkout-item .meta h3 { margin: 0 0 6px 0; }
+.actions { margin-top: 16px; }
+.error { color: #c00; margin-top: 8px; }

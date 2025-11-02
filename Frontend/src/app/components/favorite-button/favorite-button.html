@@ -1,0 +1,14 @@
+<p-button
+  [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
+  (click)="toggleFavorite(); $event.stopPropagation()"
+  [styleClass]="isFavorite ? 'p-button-rounded p-button-danger favorite-active' : 'p-button-rounded p-button-text p-button-secondary favorite-inactive'"
+  [pTooltip]="isFavorite ? 'Remove from Favorites' : 'Add to Favorites'"
+  tooltipPosition="top"
+></p-button>
+
+<div class="favorite-notification" *ngIf="showNotification">
+  <div class="notification-content" [ngClass]="{'text-red-500': true}">
+    <i class="pi" [ngClass]="{'pi-heart-fill': !isFavorite, 'pi-times-circle': isFavorite}"></i>
+    <span class="ml-2">{{ isFavorite ? 'Removed from favorites!' : 'Added to favorites!' }}</span>
+  </div>
+</div>

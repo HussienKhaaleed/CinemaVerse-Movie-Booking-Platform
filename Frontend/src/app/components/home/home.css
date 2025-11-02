@@ -1,0 +1,72 @@
+:host {
+  display: block;
+  background-color: #f9fafb;
+}
+
+/* Carousel Custom Styling */
+:host ::ng-deep .custom-carousel .p-carousel-indicators {
+  display: none; /* Hide carousel indicators as requested */
+}
+
+:host ::ng-deep .custom-carousel .p-carousel-indicator button {
+  background-color: #bfdbfe !important;
+}
+
+:host ::ng-deep .custom-carousel .p-carousel-indicator.p-highlight button {
+  background-color: #3b82f6 !important;
+}
+
+:host ::ng-deep .custom-carousel .p-carousel-prev,
+:host ::ng-deep .custom-carousel .p-carousel-next {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+}
+
+:host ::ng-deep .custom-carousel .p-carousel-prev:hover,
+:host ::ng-deep .custom-carousel .p-carousel-next:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+}
+
+:host ::ng-deep .custom-carousel .p-carousel-prev:focus,
+:host ::ng-deep .custom-carousel .p-carousel-next:focus {
+  box-shadow: none !important;
+}
+
+/* Movie card wrapper animation */
+.movie-card-wrapper {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Movie grid container animation - improved to prevent layout shifting */
+:host ::ng-deep .grid {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 300px;
+  will-change: opacity, transform;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Animation for filter transitions */
+:host ::ng-deep .min-h-\[400px\] {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}

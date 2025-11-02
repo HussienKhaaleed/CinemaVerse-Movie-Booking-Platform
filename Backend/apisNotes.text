@@ -1,0 +1,151 @@
+🔐 Authentication API
+🔸 Register
+
+POST /api/v1/auth/register
+
+Body:
+{
+  "name": "Ahmed",
+  "email": "ahmed@example.com",
+  "password": "123456"
+}
+
+Response:
+{
+  "status": "success",
+  "token": "jwt_token_here",
+  "user": { "id": "...", "name": "Ahmed", "email": "ahmed@example.com" }
+}
+
+🔸 Signin
+
+POST /api/v1/auth/signin
+
+Body:
+{
+  "email": "ahmed@example.com",
+  "password": "123456"
+}
+
+Response:
+{
+  "status": "success",
+  "token": "jwt_token_here",
+  "user": { "id": "...", "name": "Ahmed" }
+}
+
+🎥 Movies API
+🔸 Add a Movie (Admin Only)
+
+POST /api/v1/movies/
+Headers: Authorization: Bearer <token>
+Form Data:
+
+title: Inception
+description: A mind-bending thriller
+price: 150
+moviePoster: [upload image]
+
+Response:
+{
+  "status": "success",
+  "movie": {
+    "id": "...",
+    "title": "Inception",
+    "poster": "/moviePosters/17396580350.jpg"
+  }
+}
+
+🔸 Get All Movies
+
+GET /api/v1/movies/
+
+Response:
+{
+  "status": "success",
+  "results": 2,
+  "data": [
+    { "title": "Inception", "price": 150 },
+    { "title": "Oppenheimer", "price": 180 }
+  ]
+}
+
+🔸 Get Movie by ID
+
+GET /api/v1/movies/:id
+
+🔸 Update Movie (Admin Only)
+
+PATCH /api/v1/movies/:id
+Headers: Authorization: Bearer <token>
+Form Data:
+
+title: New Title
+moviePoster: [optional image]
+
+🔸 Delete Movie (Admin Only)
+
+DELETE /api/v1/movies/:id
+Headers: Authorization: Bearer <token>
+
+👤 Users API
+🔸 Get Current User
+
+GET /api/v1/users/me
+Headers: Authorization: Bearer <token>
+
+Response:
+{
+  "status": "success",
+  "user": {
+    "name": "Ahmed",
+    "email": "ahmed@example.com"
+  }
+}
+
+🎟️ Booking API
+🔸 Create Checkout Session (Stripe)
+
+POST /api/v1/bookings/create-checkout-session
+Headers: Authorization: Bearer <token>
+Body:
+
+{
+  "movieId": "670d96e5e7d9b3d4ccf25d21",
+  "quantity": 2
+}
+
+Response:
+{
+  "status": "success",
+  "session": {
+    "id": "cs_test_a1B2C3D4",
+    "url": "https://checkout.stripe.com/pay/cs_test_a1B2C3D4"
+  }
+}
+
+
+💰 Note: Stripe payments use EGP (Egyptian Pound).
+
+🔸 Stripe Webhook
+
+POST /api/v1/bookings/webhook
+Used by Stripe to confirm successful payments.
+➡️ You don’t call this manually — Stripe calls it automatically.
+
+🔸 Get My Bookings
+
+GET /api/v1/bookings/my-bookings
+Headers: Authorization: Bearer <token>
+
+Response:
+{
+  "status": "success",
+  "bookings": [
+    {
+      "movieTitle": "Inception",
+      "tickets": 2,
+      "price": 300
+    }
+  ]
+}

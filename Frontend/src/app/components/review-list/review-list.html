@@ -1,0 +1,22 @@
+<div>
+  <div *ngIf="reviews.length === 0" class="py-8 text-center text-gray-400 italic rounded-lg border border-gray-700 shadow-lg" style="background-color: #1a1a24; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+    <i class="pi pi-comments text-4xl mb-3 opacity-30 block"></i>
+    No reviews yet. Be the first to add one!
+  </div>
+
+  <div class="space-y-4">
+    <div *ngFor="let review of reviews" class="shadow-md border border-gray-700 p-5 rounded-lg transition-all hover:shadow-lg" style="background-color: #1a1a24; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+      <div class="flex justify-between mb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h4 class="font-semibold text-white">Anonymous</h4>
+            <span class="bg-blue-900 text-blue-300 text-xs px-2 py-0.5 rounded-full">Verified</span>
+          </div>
+          <p-rating [ngModel]="review.rating" [readonly]="true" [stars]="5" styleClass="mt-1"></p-rating>
+        </div>
+        <span class="text-sm text-gray-400 font-medium">{{ review.date }}</span>
+      </div>
+      <p class="text-white leading-relaxed mt-3 border-t border-gray-900 pt-3">{{ review.text }}</p>
+    </div>
+  </div>
+</div>

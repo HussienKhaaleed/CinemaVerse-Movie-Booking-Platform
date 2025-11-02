@@ -1,0 +1,42 @@
+<div class="bg-white rounded-xl overflow-hidden shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl" (click)="productClicked.emit(product)">
+  <div class="relative group">
+    <img [src]="product.image" [alt]="product.name" class="w-full aspect-[2/3] object-cover" />
+
+    <!-- Status Tag -->
+    <div class="absolute top-3 right-3 z-10">
+      <p-tag
+        [value]="product.inventoryStatus"
+        [severity]="getSeverity(product.inventoryStatus)"
+        [rounded]="true"
+        styleClass="text-sm font-semibold px-3 py-1.5"
+      ></p-tag>
+    </div>
+
+    <!-- Hover Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+      <h3 class="text-xl font-bold text-white mb-2">{{ product.name }}</h3>
+      <p class="text-gray-300 text-sm mb-3 line-clamp-2">{{ product.overview }}</p>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors w-full text-center font-medium">
+        View Details
+      </button>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <h3 class="font-bold text-lg truncate text-gray-800 mb-1">{{ product.name }}</h3>
+
+    <div class="mt-3 flex items-center justify-between">
+      <div class="text-lg font-semibold text-blue-600">${{ product.price }}</div>
+      <div class="flex gap-2">
+        <app-favorite-button
+          [itemId]="product.id.toString()"
+          [item]="product"
+        ></app-favorite-button>
+
+        <app-cart-button
+          [item]="product"
+        ></app-cart-button>
+      </div>
+    </div>
+  </div>
+</div>

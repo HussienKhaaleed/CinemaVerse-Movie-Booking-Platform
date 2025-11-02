@@ -1,0 +1,76 @@
+/* Global Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Add animation to main content */
+main {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Decorative background animations */
+.bg-blue-500, .bg-indigo-500, .bg-purple-500 {
+  animation: pulse 8s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+/* Scroll to top button animation */
+button[class*="fixed bottom-6"] {
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+  transition: opacity 0.3s, transform 0.3s, background-color 0.3s;
+}
+
+button[class*="fixed bottom-6"]:hover {
+  transform: translateY(-4px);
+}
+
+/* Footer hover effects */
+footer a {
+  transition: color 0.3s;
+}
+
+/* Page transitions */
+router-outlet + * {
+  animation: slideInUp 0.4s ease-out;
+  display: block;
+}
+
+/* Enhance focus styles for accessibility */
+button:focus, a:focus, input:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+/* Subtle background pattern */
+body {
+  background-image: radial-gradient(#f1f5f9 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Text gradient for logo */
+.text-gradient {
+  background: linear-gradient(90deg, #4f46e5, #2563eb, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

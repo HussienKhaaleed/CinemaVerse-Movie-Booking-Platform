@@ -1,0 +1,40 @@
+<div class="mb-6">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Filter by genre</h2>
+    <button
+      *ngIf="selectedGenres.length > 0"
+      class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+      (click)="clearGenres()">
+      <i class="pi pi-times-circle"></i> Clear filters
+    </button>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    <!-- All Movies option -->
+    <div
+      class="px-4 py-2 rounded-full cursor-pointer text-sm font-medium flex items-center gap-1 transform hover:scale-105 transition-all duration-200"
+      [class.bg-blue-600]="selectedGenres.length === 0"
+      [class.text-white]="selectedGenres.length === 0"
+      [class.shadow-md]="selectedGenres.length === 0"
+      [class.bg-gray-100]="selectedGenres.length > 0"
+      [class.dark:bg-gray-800]="selectedGenres.length > 0"
+      (click)="clearGenres()"
+    >
+      <i class="pi pi-filter-slash mr-1"></i> All Movies
+    </div>
+
+    <!-- Genre filters -->
+    <div
+      *ngFor="let genre of genres"
+      class="px-4 py-2 rounded-full cursor-pointer text-sm font-medium flex items-center gap-1 transform hover:scale-105 transition-all duration-200"
+      [class.bg-blue-600]="isSelected(genre.id)"
+      [class.text-white]="isSelected(genre.id)"
+      [class.shadow-md]="isSelected(genre.id)"
+      [class.bg-gray-100]="!isSelected(genre.id)"
+      [class.dark:bg-gray-800]="!isSelected(genre.id)"
+      (click)="selectGenre(genre.id)"
+    >
+      {{ genre.name }}
+    </div>
+  </div>
+</div>

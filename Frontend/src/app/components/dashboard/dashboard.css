@@ -1,0 +1,261 @@
+/* Progress bars */
+.genre-item .progress-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.genre-item .progress-fill {
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Card hover effects */
+.stat-card:hover {
+  transform: translateY(-4px);
+  transition: transform 0.3s ease;
+}
+
+.movie-card {
+  transition: all 0.3s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.action-card {
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  transform: scale(1.05);
+}
+
+/* Glassmorphism effect for dark theme with cross-browser support */
+.glass-effect {
+  background: rgba(17, 24, 39, 0.7);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.glass-effect:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Progress bar colors */
+.red-bar .p-progressbar-value {
+  background: linear-gradient(90deg, #ef4444, #dc2626) !important;
+}
+
+.orange-bar .p-progressbar-value {
+  background: linear-gradient(90deg, #f97316, #ea580c) !important;
+}
+
+.yellow-bar .p-progressbar-value {
+  background: linear-gradient(90deg, #eab308, #ca8a04) !important;
+}
+
+/* Card transitions with improved smoothness and accessibility */
+.p-card {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: rgba(17, 24, 39, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  will-change: transform, box-shadow;
+}
+
+.p-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.p-card:focus-within {
+  outline: 2px solid rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.p-card .p-card-header {
+  background: rgba(31, 41, 55, 0.7) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.p-card .p-card-content {
+  color: #e5e7eb !important;
+}
+
+/* Custom scrollbar with cross-browser support */
+/* WebKit browsers (Chrome, Safari, newer Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #4b5563 #1f2937;
+}
+
+/* For better dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    color-scheme: dark;
+  }
+}
+
+/* Hover effects for activity items */
+.activity-item {
+  transition: all 0.2s ease;
+}
+
+.activity-item:hover {
+  background: rgba(31, 41, 55, 0.9);
+  transform: translateX(4px);
+}
+
+/* Dark theme text colors */
+.text-title {
+  color: #f3f4f6 !important;
+}
+
+.text-subtitle {
+  color: #9ca3af !important;
+}
+
+/* Dark theme card overrides */
+:host ::ng-deep .p-card {
+  background: rgba(17, 24, 39, 0.7) !important;
+}
+
+:host ::ng-deep .p-card .p-card-header {
+  background: rgba(31, 41, 55, 0.7) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:host ::ng-deep .p-card .p-card-content {
+  color: #e5e7eb !important;
+}
+
+/* Progress spinner for dark theme */
+:host ::ng-deep .p-progress-spinner circle {
+  stroke: #6366f1 !important;
+}
+
+/* Button styles for dark theme */
+:host ::ng-deep .p-button.p-button-outlined {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e5e7eb;
+}
+
+:host ::ng-deep .p-button.p-button-outlined:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Tag styles for dark theme */
+:host ::ng-deep .p-tag {
+  background: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+}
+
+/* Progress bar background for dark theme */
+:host ::ng-deep .p-progressbar {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Additional responsive improvements */
+@media (max-width: 768px) {
+  .glass-effect {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .movie-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .action-card:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Animation keyframes for loading and transitions */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .movie-card:hover,
+  .action-card:hover,
+  .stat-card:hover,
+  .p-card:hover,
+  .glass-effect:hover {
+    transform: none !important;
+  }
+}
+
+/* Dark theme specific styles */
+:host-context(.dark-theme) .glass-effect {
+  background: rgba(10, 15, 25, 0.8);
+}
+
+/* Print styles for dashboard */
+@media print {
+  .glass-effect {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+
+  .text-white,
+  .text-gray-100,
+  .text-gray-200,
+  .text-gray-300 {
+    color: black !important;
+  }
+
+  .bg-gradient-to-br {
+    background: none !important;
+  }
+}

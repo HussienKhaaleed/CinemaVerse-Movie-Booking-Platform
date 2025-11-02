@@ -1,0 +1,50 @@
+<div class="bg-white rounded-2xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:scale-[1.03] border border-gray-100" (click)="movieClicked.emit(movie)">
+  <div class="relative">
+    <img [src]="movie.posterUrl" [alt]="movie.title" class="w-full h-80 object-cover" loading="lazy" />
+
+    <!-- Rating badge -->
+    <div class="absolute top-3 left-3 bg-blue-600 text-white text-sm font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+      <i class="pi pi-star-fill text-yellow-300"></i>
+      <span>{{ movie.voteAverage?.toFixed(1) || '0.0' }}</span>
+    </div>
+
+    <!-- Overlay on hover -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+      <h3 class="text-xl font-bold text-white mb-2">{{ movie.title }}</h3>
+      <p class="text-gray-200 text-sm line-clamp-3">
+        {{ movie.overview || 'No overview available.' }}
+      </p>
+      <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors w-full">
+        View Details
+      </button>
+    </div>
+  </div>
+
+  <div class="p-5">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-md" *ngFor="let genre of getFirstTwoGenres()">
+        {{ genre }}
+      </span>
+    </div>
+
+    <h3 class="text-xl font-bold text-gray-800 mb-3 truncate">{{ movie.title }}</h3>
+
+    <p class="text-gray-600 line-clamp-2 mb-4 h-12">
+      {{ movie.overview || 'No overview available.' }}
+    </p>
+
+    <div class="flex items-center justify-between">
+      <div class="text-xl font-semibold text-blue-600">${{ movie.price | number:'1.2-2' }}</div>
+      <div class="flex gap-3">
+        <app-favorite-button
+          [itemId]="movie.id.toString()"
+          [item]="movie"
+        ></app-favorite-button>
+
+        <app-cart-button
+          [item]="movie"
+        ></app-cart-button>
+      </div>
+    </div>
+  </div>
+</div>
