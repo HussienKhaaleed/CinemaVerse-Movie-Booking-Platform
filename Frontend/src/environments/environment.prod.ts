@@ -1,3 +1,4 @@
+// Production environment configuration
 export const environment = {
   production: true,
   apiUrl: 'https://cinemaverse-backend.vercel.app/api/v1',
