@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend-url.onrender.com/api/v1', // UPDATE THIS after backend deployment
+  apiUrl: 'https://cinemaverse-backend.vercel.app/api/v1',
   tmdb: {
     baseUrl: 'https://api.themoviedb.org/3',
     imgBase: 'https://image.tmdb.org/t/p/w500',
