@@ -1,5 +1,0 @@
-[build]
-builder = "NIXPACKS"
-
-[deploy]
-startCommand = "npx serve -s dist/frontend/browser -p $PORT"
