@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api/v1',
+  apiUrl: 'https://cinemaverse-backend.vercel.app/api/v1',
   tmdb: {
     baseUrl: 'https://api.themoviedb.org/3',
     imgBase: 'https://image.tmdb.org/t/p/w500',
