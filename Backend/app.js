@@ -21,7 +21,14 @@ app.post(
 );
 
 app.use(express.json());
-app.use(cors());
+
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:4200',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/movies", moviesRouter);
